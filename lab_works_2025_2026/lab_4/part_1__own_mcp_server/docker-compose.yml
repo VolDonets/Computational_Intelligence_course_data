@@ -1,0 +1,18 @@
+version: '3.8' # version of the Docker Compose file format being used
+
+services: # block defines the different containers that make up your application
+  postgres-db-mcp-service: # name of the service
+    image: postgres:15-alpine # Alpine is lightweight, great for labs
+    container_name: mcp_postgres_db
+    environment:
+      POSTGRES_USER: mcp_user
+      # WARNING: the password symbols like # and dollar should be closed with '' and double dollar
+      POSTGRES_PASSWORD: 'M&1_V3r^_C9#pLeX_P@$$s'  # in practice do NOT leave your pass opened
+      POSTGRES_DB: mcp_database
+    ports:
+      - "5433:5432" # map into another port, cause you might have installed Postgres in your OS environment and 5432 port could be used
+    volumes:
+      # This maps your local init.sql to a special folder inside the container.
+      # Postgres will automatically run any .sql files found here on the first startup.
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: unless-stopped
