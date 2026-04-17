@@ -1,4 +1,5 @@
 from typing import List, Optional
+from sqlalchemy.engine import URL
 from sqlmodel import Field, Relationship, SQLModel, create_engine
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
@@ -34,16 +35,22 @@ class Book(SQLModel, table=True):
 
 
 # The connection string using the asyncpg driver and port 5433
-DATABASE_URL = "postgresql+asyncpg://mcp_user:M&1_V3r^_C9#pLeX_P@$s@localhost:5433/mcp_database"
+DATABASE_URL = URL.create(
+    drivername="postgresql+asyncpg",
+    username="mcp_user",
+    password="M&1_V3r^_C9#pLeX_P@$s",  # SQLAlchemy will safely encode the # and @ symbols
+    host="localhost",
+    port=5433,
+    database="mcp_database"
+)
 
 # Create the async engine
-engine = create_async_engine(DATABASE_URL, echo=True) # echo=True prints the raw SQL to the console for learning!
+# echo=True prints the raw SQL to the console for learning!
+engine = create_async_engine(DATABASE_URL, echo=True)
 
 
 # A dependency function to provide database sessions
 async def get_session() -> AsyncSession:
-    async_session = sessionmaker(
-        engine, class_=AsyncSession, expire_on_commit=False
-    )
+    async_session = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
     async with async_session() as session:
         yield session
