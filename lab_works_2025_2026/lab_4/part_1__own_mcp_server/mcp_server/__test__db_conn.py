@@ -9,6 +9,10 @@ async def test_query():
 
         # Write a query using Python objects instead of raw SQL strings!
         # Let's find "Foundation" and see who wrote it
+        # SQL script analog:
+        # select *
+        #   from books
+        #  where title = 'Foundation'
         statement = select(Book).where(Book.title == "Foundation")
         result = await session.execute(statement)
         book = result.scalars().first()
