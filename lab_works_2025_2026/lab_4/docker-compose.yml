@@ -16,3 +16,25 @@ services: # block defines the different containers that make up your application
       # Postgres will automatically run any .sql files found here on the first startup.
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     restart: unless-stopped
+  mcp-client-ui:
+    build: ./
+    ports:
+      - "8501:8501"
+    environment:
+      # Pass the Postgres URL so the server.py script inside this container can connect to the DB container
+      - DATABASE_URL=postgresql+asyncpg://mcp_user:M&1_V3r^_C9#pLeX_P@$$s@postgres-db-mcp-service:5432/mcp_database
+    depends_on:
+      - postgres-db-mcp-service
+    volumes:
+      - ./src:/app/src   # This connects your local 'src' folder directly to the container's 'src' folder
+  ollama-service:  # Local LLM Engine
+      image: ollama/ollama:latest
+      container_name: local_ollama
+      ports:
+        - "11434:11434"
+      volumes:
+        - ollama_data:/root/.ollama # Saves the downloaded model weights permanently!
+      restart: unless-stopped
+
+volumes: # Define the persistent volume
+  ollama_data:

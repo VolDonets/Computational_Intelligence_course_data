@@ -46,7 +46,8 @@ DATABASE_URL = URL.create(
 
 # Create the async engine
 # echo=True prints the raw SQL to the console for learning!
-engine = create_async_engine(DATABASE_URL, echo=True)
+# engine = create_async_engine(DATABASE_URL, echo=True)
+engine = create_async_engine(DATABASE_URL, echo=False)
 
 
 # A dependency function to provide database sessions

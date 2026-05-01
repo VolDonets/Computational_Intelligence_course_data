@@ -1,6 +1,12 @@
+import sys
+import os
+
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.insert(0, project_root)
+
 import asyncio
 from sqlmodel import select
-from database import get_session, Book, Author
+from src.database import get_session, Book, Author
 
 
 async def test_query():

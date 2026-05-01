@@ -1,0 +1,9 @@
+streamlit
+langchain
+langchain-community
+langchain-anthropic
+langchain-openai
+langchain-core
+mcp
+sqlmodel
+asyncpg
