@@ -1,4 +1,5 @@
 from typing import List, Optional
+from sqlalchemy.pool import NullPool
 from sqlalchemy.engine import URL
 from sqlmodel import Field, Relationship, SQLModel, create_engine
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
@@ -35,20 +36,31 @@ class Book(SQLModel, table=True):
 
 
 # The connection string using the asyncpg driver and port 5433
+# This line of code is for external Docker communication with Docker and external instance (here is a reassigned port)
+# DATABASE_URL = URL.create(
+#     drivername="postgresql+asyncpg",
+#     username="mcp_user",
+#     password="M&1_V3r^_C9#pLeX_P@$s",  # SQLAlchemy will safely encode the # and $ symbols
+#     host="localhost",          # <- different instance name
+#     port=5433,                 # <- different port
+#     database="mcp_database"
+# )
+
+# This line of code is for internal Docker communication between Docker containers
 DATABASE_URL = URL.create(
     drivername="postgresql+asyncpg",
     username="mcp_user",
-    password="M&1_V3r^_C9#pLeX_P@$s",  # SQLAlchemy will safely encode the # and @ symbols
-    host="localhost",
-    port=5433,
+    password="M&1_V3r^_C9#pLeX_P@$s",
+    host="postgres-db-mcp-service",
+    port=5432,
     database="mcp_database"
 )
 
 # Create the async engine
 # echo=True prints the raw SQL to the console for learning!
 # engine = create_async_engine(DATABASE_URL, echo=True)
-engine = create_async_engine(DATABASE_URL, echo=False)
-
+# engine = create_async_engine(DATABASE_URL, echo=False)
+engine = create_async_engine(DATABASE_URL, echo=False, poolclass=NullPool)
 
 # A dependency function to provide database sessions
 async def get_session() -> AsyncSession:
