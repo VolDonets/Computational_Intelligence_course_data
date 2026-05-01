@@ -7,7 +7,7 @@ services: # block defines the different containers that make up your application
     environment:
       POSTGRES_USER: mcp_user
       # WARNING: the password symbols like # and dollar should be closed with '' and double dollar
-      POSTGRES_PASSWORD: 'M&1_V3r^_C9#pLeX_P@$$s'  # in practice do NOT leave your pass opened
+      POSTGRES_PASSWORD: 'M&1_V3r^_C9#pLeX_P@$$s'  # WARNING: in practice do NOT leave your pass opened
       POSTGRES_DB: mcp_database
     ports:
       - "5433:5432" # map into another port, cause you might have installed Postgres in your OS environment and 5432 port could be used
