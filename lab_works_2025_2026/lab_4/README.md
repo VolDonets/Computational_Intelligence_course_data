@@ -74,12 +74,14 @@
 3. I recommend you to use `Llama3.1` model, although you can run any local models like `Gemma` from Google (or any other providers)
 4. To install the model simply run: `docker exec -it local_ollama ollama pull llama3.1`.
    ![Installing llama models](./src_readme/3_installing_llama3.1model.png)
-5. Also, you probably will need to restart your server. Do it with command: `docker compose restart mcp-client-ui`
+5. To check if the llama model works properly: `docker exec -it local_ollama ollama run llama3.1 "Write a 5 word sentence."`
+   ![Running llama3.1 in console](./src_readme/6_running_llama_in_console.png)
+6. Also, you probably will need to restart your server. Do it with command: `docker compose restart mcp-client-ui`
    ![Restarting the server](./src_readme/4_restarting_the_server.png)
-6. Now you can open the [Your Chatbot](http://localhost:8501/) page and communicate with your agentic chatbot.
+7. Now you can open the [Your Chatbot](http://localhost:8501/) page and communicate with your agentic chatbot.
    ![Running MCP server locally](./src_readme/5_running_MCP_locally.png)
-7. `TODO 3`: Try to use other providers (but you probably will need API key). I recommend try with TogetherAI, 
+8. `TODO 3`: Try to use other providers (but you probably will need API key). I recommend try with TogetherAI, 
    they give 1$ credits (which is a lot for this lab). 
    Or you can configure your Anthropic API or Google Vertex AI API, Open AI also valid.
-8. `TODO 4`: Check if your tools works correctly, and the LLM do what it suppose to do.
+9. `TODO 4`: Check if your tools works correctly, and the LLM do what it supposes to do.
 
